@@ -175,7 +175,9 @@ export default function HomePage() {
   const upiLink = (id: string = UPI_ID) => `upi://pay?pa=${encodeURIComponent(id)}&pn=Waylo&am=100&cu=INR&tn=${encodeURIComponent('Waylo 25 tasks')}`;
   const qrUrl = (id: string = UPI_ID) => `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(upiLink(id))}`;
   const dlInput = 'w-full bg-white border border-border rounded-xl px-4 py-3 text-ink text-sm placeholder:text-stone/60 focus:outline-none focus:border-dot transition-colors';
-  const openDownload = () => { setDlPlan(null); setPStatus('idle'); setPMsg(''); setDlStep(signedInEmail ? 'plan' : 'signin'); setShowDownload(true); };
+  // Hackathon site: skip sign-in / payment (no database) — go straight to the
+  // platform picker, which triggers the direct DMG / APK download.
+  const openDownload = () => { setPStatus('idle'); setPMsg(''); setDlStep('platform'); setShowDownload(true); };
   const MACOS_DMG_URL = '/Waylo-macOS.dmg';
   const triggerDownload = (url: string, filename?: string) => {
     const a = document.createElement('a');
